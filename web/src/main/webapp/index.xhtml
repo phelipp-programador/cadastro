@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>Cadastro de Cliente</title>
+</h:head>
+<h:body>
+
+	<h:panelGroup>
+		<h:form>
+			<p:growl id="msgs" showDetail="true" />
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-12 ui-md-4">
+					<p:button value="Create" icon="pi pi-plus"
+						onclick="PF('createClienteDialog').show()"
+						styleClass="ui-button-success" style="margin-right: .5rem" />
+				</div>
+				<div class="ui-g-12 ui-md-4">
+				
+					<p:commandButton value="Refress" icon="pi pi-refresh"
+						actionListener="#{clienteBean.findAll}" update=" dt-cliente"
+						styleClass="ui-button-info" style="margin-right: .5rem" />
+
+				</div>
+				<div class="ui-g-12 ui-md-4">
+					<div class="ui-inputgroup">
+						<p:inputText placeholder="Keyboard"
+							value="#{clienteBean.txtPerquisa}" />
+						<p:commandButton icon="pi pi-search"
+							actionListener="#{clienteBean.consultar}"
+							styleClass="ui-button-warning"
+							update="dt-cliente" />
+					</div>
+				</div>
+
+			</div>
+
+
+			<ui:insert>
+				<ui:include src="/component/createClienteDialog.xhtml" />
+			</ui:insert>
+			<div class="card">
+
+
+				<p:dataTable id="dt-cliente" widgetVar="dtClientes" var="cliente"
+					value="#{clienteBean.clientes}" editable="true">
+
+
+
+					<p:column headerText="Code" sortBy="#{cliente.id}"
+						filterBy="#{cliente.id}">
+						<h:outputText value="#{cliente.id}" />
+
+					</p:column>
+					<p:column headerText="Nome" sortBy="#{cliente.nome}"
+						filterBy="#{cliente.nome}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.nome}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText placeholder="Nome" value="#{cliente.nome}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+
+
+					</p:column>
+					<p:column headerText="Data Nasc" sortBy="#{cliente.dataNascimento}"
+						filterBy="#{cliente.dataNascimento}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.dataNascimento}"
+									converter="locaDataConverter" />
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar placeholder="Data Nascimento"
+									value="#{cliente.dataNascimento}" navigator="true"
+									converter="locaDataConverter" locale="pt_BR">
+								</p:calendar>
+							</f:facet>
+						</p:cellEditor>
+
+					</p:column>
+					<p:column headerText="Email" sortBy="#{cliente.email}"
+						filterBy="#{cliente.email}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.email}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText placeholder="E-mail" value="#{cliente.email}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Telefone" sortBy="#{cliente.telefone.ddd}"
+						filterBy="#{cliente.telefone.ddd}#{cliente.telefone.numero}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.telefone}"
+									converter="telefoneConverter" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputMask size="4" placeholder="DDD"
+									value="#{cliente.telefone.ddd}" maxlength="4" mask="(99)"
+									style="width:30%" />
+								<p:inputMask size="9" placeholder="Numero"
+									value="#{cliente.telefone.numero}" maxlength="9"
+									mask="999999999" style="width:70%" />
+							</f:facet>
+						</p:cellEditor>
+
+					</p:column>
+					<p:column headerText="Nome do Pai" sortBy="#{cliente.nomePai}"
+						filterBy="#{cliente.nomePai}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.nomePai}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText placeholder="Nome do Pai"
+									value="#{cliente.nomePai}" style="width:100%" />
+
+							</f:facet>
+						</p:cellEditor>
+
+
+					</p:column>
+					<p:column headerText="Nome da Mãe" sortBy="#{cliente.nomeMae}"
+						filterBy="#{cliente.nomeMae}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.nomeMae}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText placeholder="Nome da Mãe"
+									value="#{cliente.nomeMae}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column>
+						<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+							saveTitle="Save Row" style="width:100%" />
+					</p:column>
+					<p:column style="width:2rem">
+						<p:commandButton update="@form:dt-cliente @form:msgs"
+							actionListener="#{clienteBean.delete(cliente)}"
+							icon="pi pi-trash" style="width:100%">
+						</p:commandButton>
+					</p:column>
+
+					<p:ajax event="rowEdit"
+						listener="#{clienteBean.update(cliente.id,cliente)}" update="@form:msgs" />
+				</p:dataTable>
+
+
+
+
+			</div>
+		</h:form>
+	</h:panelGroup>
+
+</h:body>
+</html>
+

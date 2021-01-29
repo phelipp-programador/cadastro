@@ -1,0 +1,5 @@
+/home/phelipp/cadastro/cadastro/web/src/main/java/br/com/pscs/web/validation/TelefoneValidator.java
+/home/phelipp/cadastro/cadastro/web/src/main/java/br/com/pscs/web/bean/ClienteBean.java
+/home/phelipp/cadastro/cadastro/web/src/main/java/br/com/pscs/web/service/ClienteService.java
+/home/phelipp/cadastro/cadastro/web/src/main/java/br/com/pscs/web/converter/LocalDataConverter.java
+/home/phelipp/cadastro/cadastro/web/src/main/java/br/com/pscs/web/converter/TelefoneConverter.java
