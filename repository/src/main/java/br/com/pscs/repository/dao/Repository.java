@@ -100,7 +100,7 @@ public interface Repository<T extends ModelImpl> {
 		try (Session session = sessionFactory.openSession();) {
 			String classNome = classe.getSimpleName();
 			
-			Query query = session.createQuery("from " + classNome+ " where " + campo + " =:nome ");
+			Query query = session.createQuery("from " + classNome+ " where " + campo + " like :nome ");
 			query.setParameter("nome", text);
 			List<T> resultList = query.list();
 

@@ -11,7 +11,7 @@
 <h:body>
 
 	<h:panelGroup>
-		<h:form>
+		<h:form id="formulario">
 			<p:growl id="msgs" showDetail="true" />
 			<div class="ui-g ui-fluid">
 				<div class="ui-g-12 ui-md-4">
@@ -19,35 +19,26 @@
 						onclick="PF('createClienteDialog').show()"
 						styleClass="ui-button-success" style="margin-right: .5rem" />
 				</div>
-				<div class="ui-g-12 ui-md-4">
-				
-					<p:commandButton value="Refress" icon="pi pi-refresh"
-						actionListener="#{clienteBean.findAll}" update=" dt-cliente"
-						styleClass="ui-button-info" style="margin-right: .5rem" />
 
-				</div>
 				<div class="ui-g-12 ui-md-4">
 					<div class="ui-inputgroup">
 						<p:inputText placeholder="Keyboard"
 							value="#{clienteBean.txtPerquisa}" />
 						<p:commandButton icon="pi pi-search"
 							actionListener="#{clienteBean.consultar}"
-							styleClass="ui-button-warning"
-							update="dt-cliente" />
+							styleClass="ui-button-warning" update="msgs dt-cliente"  />
 					</div>
 				</div>
 
 			</div>
 
 
-			<ui:insert>
-				<ui:include src="/component/createClienteDialog.xhtml" />
-			</ui:insert>
-			<div class="card">
 
-
-				<p:dataTable id="dt-cliente" widgetVar="dtClientes" var="cliente"
-					value="#{clienteBean.clientes}" editable="true">
+				<p:dataTable id="dt-cliente" widgetVar="dtProducts" var="cliente"
+					value="#{clienteBean.clientes}" editable="true" 
+					  paginator="true"
+					  rowsPerPageTemplate="5,10,{ShowAll|'All'}"
+					>
 
 
 
@@ -71,7 +62,7 @@
 
 					</p:column>
 					<p:column headerText="Data Nasc" sortBy="#{cliente.dataNascimento}"
-						filterBy="#{cliente.dataNascimento}">
+						>
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{cliente.dataNascimento}"
@@ -99,7 +90,7 @@
 						</p:cellEditor>
 					</p:column>
 					<p:column headerText="Telefone" sortBy="#{cliente.telefone.ddd}"
-						filterBy="#{cliente.telefone.ddd}#{cliente.telefone.numero}">
+						>
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{cliente.telefone}"
@@ -156,13 +147,13 @@
 					</p:column>
 
 					<p:ajax event="rowEdit"
-						listener="#{clienteBean.update(cliente.id,cliente)}" update="@form:msgs" />
+						listener="#{clienteBean.update(cliente.id,cliente)}"
+						update="@form:msgs" />
 				</p:dataTable>
 
-
-
-
-			</div>
+			<ui:insert>
+				<ui:include src="/component/createClienteDialog.xhtml" />
+			</ui:insert>
 		</h:form>
 	</h:panelGroup>
 

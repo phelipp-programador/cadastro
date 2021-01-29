@@ -39,7 +39,7 @@ public class ClienteService implements Serializable {
 		}
 	}
 
-	public void save(Cliente cliente, ClienteRepository repository, List lista) {
+	public void save(Cliente cliente, ClienteRepository repository,final List lista) {
 		Optional<Cliente> clienteOptional = repository.save(cliente);
 		isPresent(clienteOptional, "Cadastro", "Cliente Cadastrado com sucesso", "Erro ao cadastrar!!")
 				.map(clienteAux -> {
@@ -49,7 +49,7 @@ public class ClienteService implements Serializable {
 
 	}
 
-	public void update(Integer oldClienteId, Cliente newCliente, ClienteRepository repository, List lista) {
+	public void update(Integer oldClienteId, Cliente newCliente, ClienteRepository repository, final List lista) {
 		Optional<Cliente> clienteOptional = repository.update(newCliente, oldClienteId);
 		isPresent(clienteOptional, "Cadastro", "Cliente Atualizado com sucesso", "Erro ao Atualizar!!")
 				.map(clienteAux -> {
@@ -65,19 +65,7 @@ public class ClienteService implements Serializable {
 
 	}
 
-	public void consultar(String search, ClienteRepository repository, List lista) {
-		Optional<List> clienteOptional = repository.findAllByNome(search);
-
-		if (clienteOptional.isPresent()) {
-			lista = clienteOptional.get();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Search", "Foram encontrados " ));
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Search", "Impossivel localizar o Cliente"));
-		}
-
-	}
+	
 
 	public void delete(Cliente cliente, ClienteRepository repository, List lista) {
 		Optional<Cliente> clienteOptional = repository.delete(cliente);

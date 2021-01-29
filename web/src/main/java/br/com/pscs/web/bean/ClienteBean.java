@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -23,7 +24,7 @@ import br.com.pscs.web.service.ClienteService;
 import lombok.Data;
 
 @Named
-@ViewScoped
+@SessionScoped
 @Data
 public class ClienteBean implements Serializable {
 	/**
@@ -45,7 +46,7 @@ public class ClienteBean implements Serializable {
 		cliente = new Cliente();
 		cliente.setTelefone(new Telefone());
 		// service = new ClienteService();
-		findAll();
+		 findAll();
 
 	}
 
@@ -64,8 +65,9 @@ public class ClienteBean implements Serializable {
 
 	public void save() {
 		service.save(this.cliente, repository, clientes);
-		resetCliente();
+		//findAll();
 		PrimeFaces.current().executeScript("PF('createClienteDialog').hide()");
+		resetCliente();
 
 	}
 
@@ -91,9 +93,23 @@ public class ClienteBean implements Serializable {
 	}
 
 	public void consultar() {
-		if(!txtPerquisa.isBlank()|| !txtPerquisa.isEmpty()) {
-		service.consultar(txtPerquisa, repository,clientes);}
-	}
+		if (!txtPerquisa.isBlank() || !txtPerquisa.isEmpty()) {
+			Optional<List> clienteOptional = repository.findAllByNome(txtPerquisa);
 
+			clienteOptional.ifPresentOrElse(value -> {
+				this.clientes = value;
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Search", "Foram encontrados "));
+
+			}, () -> {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN, "Search", "Não consta Dados"));
+
+			});
+
+		} else {
+			findAll();
+		}
+	}
 
 }

@@ -8,26 +8,25 @@
 
 	<p:dialog header="Cadastro Cliente" width="450" showEffect="fade"
 		modal="true" widgetVar="createClienteDialog" responsive="true">
+
 		<p:outputPanel id="manage-product-content" class="ui-fluid">
 			<p:outputPanel>
-			<p:badge>Dados </p:badge>
-				
+				<h5>Dados</h5>
+
 				<div class="p-field">
 					<p:inputText placeholder="Nome" value="#{clienteBean.cliente.nome}"
-						required="true" />
+						 />
 
 				</div>
 				<div class="p-field">
 					<h:panelGroup>
 						<p:inputMask size="16" placeholder="CPF"
-							
-							value="#{clienteBean.cliente.cpf}" required="true" 
-							requiredMessage="Necessita de preencher o campo cpf" maxlength="16"
-							mask="999.999.999 - 99" />
+							value="#{clienteBean.cliente.cpf}" 
+							maxlength="16" mask="999.999.999 - 99" />
 						<p:calendar size="11" placeholder="Data Nascimento"
 							value="#{clienteBean.cliente.dataNascimento}" navigator="true"
 							pattern="dd/MM/yyyy" converter="locaDataConverter" locale="pt_BR"
-							required="true">
+							>
 						</p:calendar>
 					</h:panelGroup>
 
@@ -36,17 +35,14 @@
 				<h5>Contato</h5>
 				<div class="p-field">
 					<p:inputText placeholder="E-mail"
-						value="#{clienteBean.cliente.email}" required="true"
-						requiredMessage="Necessita de preencher o campo e-mail" />
+						value="#{clienteBean.cliente.email}"  />
 				</div>
 				<div class="p-field">
 					<h:panelGroup>
-						<p:inputMask required="true"
-							requiredMessage="Necessita de preencher o campo DDD" size="4"
+						<p:inputMask size="4"
 							placeholder="DDD" value="#{clienteBean.cliente.telefone.ddd}"
 							maxlength="4" mask="(99)" />
-						<p:inputMask required="true"
-							requiredMessage="Necessita de preencher o campo Numero" size="9"
+						<p:inputMask size="9"
 							placeholder="Numero"
 							value="#{clienteBean.cliente.telefone.numero}" maxlength="9"
 							mask="999999999" />
@@ -58,13 +54,11 @@
 				<h5>Filiação</h5>
 				<div class="p-field">
 					<p:inputText placeholder="Nome do Pai"
-						value="#{clienteBean.cliente.nomePai}" 
-						required="true" requiredMessage="Necessita de preencher o campo nome do pai"  />
+						value="#{clienteBean.cliente.nomePai}" />
 				</div>
 				<div class="p-field">
 					<p:inputText placeholder="Nome do Mãe"
-						value="#{clienteBean.cliente.nomeMae}" 
-						required="true" requiredMessage="Necessita de preencher o campo nome da mãe"  />
+						value="#{clienteBean.cliente.nomeMae}" />
 				</div>
 
 			</p:outputPanel>
@@ -72,11 +66,12 @@
 
 		<f:facet name="footer">
 			<p:commandButton value="Save" icon="pi pi-check"
-				actionListener="#{clienteBean.save}" update="growl dt-cliente" />
+				actionListener="#{clienteBean.save}" update="msgs dt-cliente" />
 			<p:commandButton value="Cancel" icon="pi pi-times"
 				onclick="PF('createClienteDialog').hide()"
 				class="ui-button-secondary" />
 		</f:facet>
+
 	</p:dialog>
 
 
